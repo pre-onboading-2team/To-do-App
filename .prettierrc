@@ -1,0 +1,7 @@
+{
+  "extends": ["react-app", "plugin:prettier/recommended"],
+  "tabWidth": 2,
+  "endOfLine": "lf",
+  "arrowParens": "avoid",
+  "singleQuote": true
+}
