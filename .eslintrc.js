@@ -13,9 +13,10 @@ module.exports = {
 		sourceType: 'module',
 	},
 	// react 기본 plugin
-	plugins: ['react'],
+	plugins: ['import', 'react'],
 	rules: {
-		"react/jsx-uses-react": "off",
-		"react/react-in-jsx-scope": "off"
+		'react/jsx-uses-react': 'off',
+		'react/react-in-jsx-scope': 'off',
+		'react/prop-types': 'off',
 	},
 };
