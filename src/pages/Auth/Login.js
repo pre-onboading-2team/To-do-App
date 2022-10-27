@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./css/join.scss";
+import { API } from "../../api/url";
+import "./styles/join.scss";
 import { useCallback } from "react";
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://pre-onboarding-selection-task.shop/auth/signin", {
+    fetch(API.LOGIN, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

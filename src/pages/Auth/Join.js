@@ -1,10 +1,13 @@
 import React, { useCallback, useState } from "react";
-import "./css/join.scss";
+import { API } from "../../api/url";
+import "./styles/join.scss";
 const Join = () => {
   const [email, setEmail] = useState("");
+  //유효성 검사
   const [isEmail, setIsEmail] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
   const [password, setPassword] = useState("");
+  //유효성 검사
   const [isPassword, setIsPassword] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState("");
   const isValidEmail = email.includes("@");
@@ -47,7 +50,7 @@ const Join = () => {
     (e) => {
       e.preventDefault();
 
-      fetch("https://pre-onboarding-selection-task.shop/auth/signup", {
+      fetch(API.JOIN, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
