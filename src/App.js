@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Login from "./Login";
-import Join from "./Join";
+import Login from "./pages/Auth/Login";
+import Join from "./pages/Auth/Join";
 
 function App() {
   return (
