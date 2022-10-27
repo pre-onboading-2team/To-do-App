@@ -18,8 +18,6 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
   return <LayoutBlock>{children}</LayoutBlock>;
 };
-
-export default Layout;

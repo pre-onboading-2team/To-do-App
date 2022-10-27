@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 
-import { UserInfoProps } from "../apis/AUTH_API";
+import { UserInfoProps } from "../apis/AuthService";
 
 type LoginAction = HTMLInputElement;
 
@@ -14,7 +14,7 @@ function inputReducer(
   };
 }
 
-function useInputs(
+export function useInputs(
   initialForms: UserInfoProps
 ): [UserInfoProps, (e: React.ChangeEvent<HTMLInputElement>) => void] {
   const [state, dispatch] = useReducer(inputReducer, initialForms);
@@ -23,5 +23,3 @@ function useInputs(
   };
   return [state, onChange];
 }
-
-export default useInputs;

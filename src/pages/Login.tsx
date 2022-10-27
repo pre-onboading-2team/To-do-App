@@ -1,21 +1,23 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
-import AUTH_API from "../apis/AUTH_API";
-import Button, { ButtonGroup } from "../components/common/Button";
-import { Input, InputField } from "../components/common/Input";
-import Layout from "../components/common/Layout";
-import Message from "../components/common/Message";
-import PageTitle from "../components/common/PageTitle";
+import { AuthService } from "../apis";
+import {
+  Button,
+  ButtonGroup,
+  Header,
+  Input,
+  InputField,
+  Layout,
+  Message,
+} from "../components/common";
 import {
   ACCESS_TOKEN,
   useLoginDispatch,
   useLoginState,
 } from "../contexts/LoginContext";
-import useInputs from "../utils/useInputs";
-import useLocalStorage from "../utils/useLocalStorage";
+import { useInputs, useLocalStorage } from "../hooks";
 import { isValidEmail, isValidPassword } from "../utils/validation";
 
 type LoginSuccessState = {
@@ -46,7 +48,7 @@ const initialLoginMessage: LoginMessageState = {
   message: "",
 };
 
-const Login = () => {
+export const Login = () => {
   const navigate = useNavigate();
   const loginState = useLoginState();
   const loginDispatch = useLoginDispatch();
@@ -59,9 +61,10 @@ const Login = () => {
   const { email, password } = inputState;
   const { display, message } = loginMessage;
 
-  async function login(): Promise<LoginResultState | unknown> {
+  async function tryLogin(): Promise<LoginResultState | unknown> {
     try {
-      const res = await AUTH_API.signIn(inputState);
+      // const res = await AUTH_API.signIn(inputState);
+      const res = await AuthService.signIn(inputState);
       return {
         statusCode: res.status,
         statusText: res.statusText,
@@ -87,7 +90,7 @@ const Login = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const status = (await login()) as LoginResultState;
+    const status = (await tryLogin()) as LoginResultState;
 
     if (status.statusCode === 200) {
       const successStatus = status as LoginSuccessState;
@@ -123,7 +126,7 @@ const Login = () => {
 
   return (
     <Layout>
-      <PageTitle>로그인</PageTitle>
+      <Header>로그인</Header>
       <form onSubmit={onSubmit}>
         <InputField>
           <label htmlFor="email">이메일</label>
@@ -144,7 +147,7 @@ const Login = () => {
             value={password}
             onChange={onChange}
           />
-          {display ? <Message type="negative" message={message} /> : null}
+          {display && <Message type="negative" message={message} />}
         </InputField>
         <ButtonGroup>
           <Button
@@ -161,5 +164,3 @@ const Login = () => {
     </Layout>
   );
 };
-
-export default Login;

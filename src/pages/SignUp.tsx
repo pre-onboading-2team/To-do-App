@@ -2,13 +2,17 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AUTH_API, { UserInfoProps } from "../apis/AUTH_API";
-import Button, { ButtonGroup } from "../components/common/Button";
+import { AuthService } from "../apis";
+import { UserInfoProps } from "../apis/AuthService";
+import {
+  Button,
+  ButtonGroup,
+  Header,
+  Layout,
+  Message,
+} from "../components/common";
 import { Input, InputField } from "../components/common/Input";
-import Layout from "../components/common/Layout";
-import Message from "../components/common/Message";
-import PageTitle from "../components/common/PageTitle";
-import useInputs from "../utils/useInputs";
+import { useInputs } from "../hooks";
 import { isValidEmail, isValidPassword } from "../utils/validation";
 
 type SignUpSuccessState = {
@@ -41,7 +45,7 @@ const initialSignupMessage: SignupMessageState = {
   message: "",
 };
 
-const SignUp = () => {
+export const SignUp = () => {
   const navigate = useNavigate();
   const [inputsState, onChange] = useInputs(initialInputState);
   const [signupMessage, setSignupMessage] = useState(initialSignupMessage);
@@ -51,9 +55,9 @@ const SignUp = () => {
 
   const goBack = () => navigate(-1);
 
-  async function signUpUser(): Promise<any> {
+  async function trySignUp(): Promise<any> {
     try {
-      const res = await AUTH_API.signUp(inputsState);
+      const res = await AuthService.signUp(inputsState);
       return {
         statusCode: res.status,
         statusText: res.statusText,
@@ -78,7 +82,7 @@ const SignUp = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const status = (await signUpUser()) as SignUpResultState;
+    const status = (await trySignUp()) as SignUpResultState;
     if (status.statusCode === 201) {
       const signupMessage = {
         display: true,
@@ -99,7 +103,7 @@ const SignUp = () => {
 
   return (
     <Layout>
-      <PageTitle>회원가입</PageTitle>
+      <Header>회원가입</Header>
       <form onSubmit={onSubmit}>
         <InputField>
           <label htmlFor="email">
@@ -127,7 +131,7 @@ const SignUp = () => {
             비밀번호
           </label>
         </InputField>
-        {display ? <Message type={type} message={message} /> : null}
+        {display && <Message type={type} message={message} />}
         <ButtonGroup>
           <Button
             type="submit"

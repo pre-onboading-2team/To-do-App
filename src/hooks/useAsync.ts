@@ -46,7 +46,7 @@ const initialState: RequestState = {
   error: false,
 };
 
-function useAsync(
+export function useAsync(
   callback: () => Promise<any>,
   deps: DependencyList = []
 ): [RequestState, () => Promise<void>] {
@@ -68,5 +68,3 @@ function useAsync(
 
   return [state, fetchData];
 }
-
-export default useAsync;

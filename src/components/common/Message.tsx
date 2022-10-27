@@ -16,12 +16,10 @@ const NegativeMessage = styled.div`
   color: red;
 `;
 
-const Message = ({ type, message }: MessageProps) => {
+export const Message = ({ type, message }: MessageProps) => {
   return type === "positive" ? (
     <PositiveMessage>{message}</PositiveMessage>
   ) : (
     <NegativeMessage>{message}</NegativeMessage>
   );
 };
-
-export default Message;

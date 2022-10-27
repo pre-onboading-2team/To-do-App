@@ -4,10 +4,11 @@ import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { MdCancel, MdCheck, MdDelete, MdEdit } from "react-icons/md";
 
-import TODO_API, { TodoProps } from "../../apis/TODO_API";
+import { TodoService } from "../../apis";
+import { TodoProps } from "../../apis/TodoService";
 import { ACCESS_TOKEN } from "../../contexts/LoginContext";
-import useLocalStorage from "../../utils/useLocalStorage";
-import Message from "../common/Message";
+import { useLocalStorage } from "../../hooks";
+import { Message } from "../common";
 
 export type TodoItemProps = {
   data: {
@@ -32,7 +33,7 @@ type TodoItemEditProps = {
   todo: string;
   isCompleted: boolean;
   onText: () => void;
-  fetchEdit: (data: TodoProps) => Promise<UpdateTodoResultState | unknown>;
+  tryUpdateTodo: (data: TodoProps) => Promise<UpdateTodoResultState | unknown>;
   getTodos: () => void;
 };
 
@@ -89,9 +90,9 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
 
   const { display, message } = itemMessage;
 
-  const fetchRemove = async (): Promise<RemoveTodoResultState | unknown> => {
+  const tryDeleteTodo = async (): Promise<RemoveTodoResultState | unknown> => {
     try {
-      const res = await TODO_API.deleteTodo(id, accessToken);
+      const res = await TodoService.deleteTodo(id, accessToken);
       return {
         statusCode: res.status,
         statusText: res.statusText,
@@ -114,11 +115,11 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
     }
   };
 
-  const fetchEdit = async (
+  const tryUpdateTodo = async (
     data: TodoProps
   ): Promise<UpdateTodoResultState | unknown> => {
     try {
-      const res = await TODO_API.updateTodo(id, data, accessToken);
+      const res = await TodoService.updateTodo(id, data, accessToken);
       return {
         statusCode: res.status,
         statusText: res.statusText,
@@ -142,7 +143,7 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
   };
 
   const onToggle = async () => {
-    const updateResponse = (await fetchEdit({
+    const updateResponse = (await tryUpdateTodo({
       todo,
       isCompleted: !isCompleted,
     })) as UpdateTodoResultState;
@@ -159,7 +160,7 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
   };
 
   const onRemove = async () => {
-    const removeResponse = (await fetchRemove()) as RemoveTodoResultState;
+    const removeResponse = (await tryDeleteTodo()) as RemoveTodoResultState;
     if (removeResponse.statusCode === 204) {
       getTodos();
     } else {
@@ -182,7 +183,7 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
 
   return (
     <li className={`TodoItem ${isCompleted ? "isCompleted" : ""}`}>
-      {display ? <Message type="negative" message={message} /> : null}
+      {display && <Message type="negative" message={message} />}
       {mode === "text" ? (
         <TodoItemBody
           onToggle={onToggle}
@@ -197,7 +198,7 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
           id={id}
           isCompleted={isCompleted}
           todo={todo}
-          fetchEdit={fetchEdit}
+          tryUpdateTodo={tryUpdateTodo}
           getTodos={getTodos}
         />
       )}
@@ -235,7 +236,7 @@ const TodoItemEdit = ({
   id,
   todo,
   onText,
-  fetchEdit,
+  tryUpdateTodo,
   getTodos,
   isCompleted,
 }: TodoItemEditProps) => {
@@ -244,7 +245,7 @@ const TodoItemEdit = ({
   const { display, message } = editMessage;
 
   const onSave = async () => {
-    const updateResponse = (await fetchEdit({
+    const updateResponse = (await tryUpdateTodo({
       todo: value,
       isCompleted,
     })) as UpdateTodoResultState;
@@ -273,7 +274,7 @@ const TodoItemEdit = ({
   return (
     <div>
       <input type="text" value={value} onChange={onChange} />
-      {display ? <Message type="negative" message={message} /> : null}
+      {display && <Message type="negative" message={message} />}
       <MdCheck onClick={onSave} />
       <MdCancel onClick={onCancel} />
     </div>

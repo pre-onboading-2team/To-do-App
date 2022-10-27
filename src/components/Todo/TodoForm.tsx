@@ -1,12 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import TODO_API, { TodoProps } from "../../apis/TODO_API";
+import { TodoService } from "../../apis";
+import { TodoProps } from "../../apis/TodoService";
 import { ACCESS_TOKEN } from "../../contexts/LoginContext";
-import useLocalStorage from "../../utils/useLocalStorage";
-import Button from "../common/Button";
-import { Input } from "../common/Input";
-import Message from "../common/Message";
+import { useLocalStorage } from "../../hooks";
+import { Button, Input, Message } from "../common";
 
 type CreateTodoSuccessState = {
   statusCode: number;
@@ -38,11 +37,11 @@ const TodoForm = ({ getTodos }: { getTodos: () => void }) => {
 
   const { display, message } = formMessage;
 
-  const createTodo = async (
+  const tryCreateTodo = async (
     data: TodoProps
   ): Promise<CreateTodoResultState | unknown | void> => {
     try {
-      const res = await TODO_API.createTodo(data, accessToken);
+      const res = await TodoService.createTodo(data, accessToken);
       return {
         statusCode: res.status,
         statusText: res.statusText,
@@ -67,7 +66,7 @@ const TodoForm = ({ getTodos }: { getTodos: () => void }) => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const createResponse = (await createTodo({
+    const createResponse = (await tryCreateTodo({
       todo: `${value}`,
     })) as CreateTodoResultState;
     if (createResponse.statusCode === 201) {
@@ -88,7 +87,7 @@ const TodoForm = ({ getTodos }: { getTodos: () => void }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      {display ? <Message type="negative" message={message} /> : null}
+      {display && <Message type="negative" message={message} />}
       <Input
         type="text"
         value={value}

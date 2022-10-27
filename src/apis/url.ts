@@ -1,5 +1,9 @@
-const server = {
-  preOnboarding: "https://pre-onboarding-selection-task.shop/",
+export const BASE_URL = {
+  todo: "https://pre-onboarding-selection-task.shop/",
 };
 
-export default server;
+export const URL = {
+  LOGIN: "/auth/signin",
+  SIGNUP: "/auth/signup",
+  TODO: "/todos",
+};

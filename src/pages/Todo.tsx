@@ -2,11 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import TODO_API from "../apis/TODO_API";
-import Button from "../components/common/Button";
-import Layout from "../components/common/Layout";
-import Message from "../components/common/Message";
-import PageTitle from "../components/common/PageTitle";
+import { TodoService } from "../apis";
+import { Button, Header, Layout, Message } from "../components/common";
 import { TodoForm, TodoList } from "../components/Todo";
 import {
   ACCESS_TOKEN,
@@ -14,7 +11,7 @@ import {
   useLoginState,
 } from "../contexts/LoginContext";
 import { TodosState } from "../contexts/TodosContext";
-import useLocalStorage from "../utils/useLocalStorage";
+import { useLocalStorage } from "../hooks";
 
 type GetTodoSuccessState = {
   statusCode: number;
@@ -39,7 +36,7 @@ const initialTodoMessage: TodoMessageState = {
   message: "",
 };
 
-const Todo = () => {
+export const Todo = () => {
   const navigate = useNavigate();
   const loginState = useLoginState();
   const loginDispatch = useLoginDispatch();
@@ -51,9 +48,9 @@ const Todo = () => {
   const { isLoggedIn } = loginState;
   const { display, message } = todoMessage;
 
-  const fetchTodos = async (): Promise<GetTodoResultState | unknown> => {
+  const tryGetTodos = async (): Promise<GetTodoResultState | unknown> => {
     try {
-      const res = await TODO_API.getTodos(accessToken);
+      const res = await TodoService.getTodos(accessToken);
       return {
         statusCode: res.status,
         statusText: res.statusText,
@@ -77,7 +74,7 @@ const Todo = () => {
   };
 
   const getTodos = async () => {
-    const fetched = (await fetchTodos()) as GetTodoResultState;
+    const fetched = (await tryGetTodos()) as GetTodoResultState;
     if (fetched.statusCode === 200) {
       const successTodos = fetched as GetTodoSuccessState;
       setTodos(successTodos.data);
@@ -109,13 +106,11 @@ const Todo = () => {
 
   return (
     <Layout>
-      <PageTitle>할 일 목록</PageTitle>
-      {display ? <Message type="negative" message={message} /> : null}
+      <Header>할 일 목록</Header>
+      {display && <Message type="negative" message={message} />}
       <TodoForm getTodos={getTodos} />
       <TodoList getTodos={getTodos} todos={todos} />
       <Button onClick={logout}>로그아웃</Button>
     </Layout>
   );
 };
-
-export default Todo;

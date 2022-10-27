@@ -1,18 +1,16 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-const PageTitleText = styled.h1`
+const HeaderText = styled.h1`
   font-family: "Spoqa Han Sans Neo", "sans-serif";
   font-weight: 700;
   margin-bottom: 2rem;
 `;
 
-type PageTitleProps = {
+type HeaderProps = {
   children: ReactNode;
 };
 
-const PageTitle = ({ children }: PageTitleProps) => {
-  return <PageTitleText>{children}</PageTitleText>;
+export const Header = ({ children }: HeaderProps) => {
+  return <HeaderText>{children}</HeaderText>;
 };
-
-export default PageTitle;

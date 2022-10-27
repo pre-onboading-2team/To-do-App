@@ -41,7 +41,7 @@ const ButtonBlock = styled.button`
   }
 `;
 
-const Button = ({
+export const Button = ({
   children,
   type = "button",
   disabled = false,
@@ -53,5 +53,3 @@ const Button = ({
     </ButtonBlock>
   );
 };
-
-export default Button;
