@@ -3,13 +3,13 @@ import { API } from "../../api/url";
 import "./styles/join.scss";
 const Join = () => {
   const [email, setEmail] = useState("");
-  //유효성 검사
   const [isEmail, setIsEmail] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
+
   const [password, setPassword] = useState("");
-  //유효성 검사
   const [isPassword, setIsPassword] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState("");
+
   const isValidEmail = email.includes("@");
   const isValidPassword = password.length >= 8;
   const isValidInput = email.length >= 1 && password.length >= 1;
