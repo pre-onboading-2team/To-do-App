@@ -10,6 +10,7 @@
 
 - [🌍 배포 링크](https://wanted-pre-onboarding-frontend-psi.vercel.app/)
 - [📄 팀 노션](https://plain-airboat-3f4.notion.site/10-27-Todo-f9fb2a1265e54c33b0b73c306c230042)
+- [⭐️ Best Practice 선정 과정](https://plain-airboat-3f4.notion.site/To-do-App-Best-Practice-1e2314bad5604667ad1b32dd0b3e48e2)
 
 <br />
 
