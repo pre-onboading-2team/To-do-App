@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# Week 1-1. Todo-App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. [팀 소개 👫] (#1-팀-소개-)
+1. [프로젝트 소개 🚀](#2-프로젝트-소개-)
+2. [구현 기능 📍](#3-구현-기능-)
+3. [프로젝트 구조 🗂](#4-프로젝트-구조-)
+4. [프로젝트 설치 및 실행 ✨](#5-프로젝트-설치-및-실행-)
 
-## Available Scripts
+<br/>
 
-In the project directory, you can run:
+[🌍 배포 링크](https://wanted-pre-onboarding-frontend-psi.vercel.app/)
 
-### `npm start`
+<br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 1. 팀 소개 👫
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [이빛나 (팀장)](https://github.com/bitnaleeeee)
+- [모상빈](https://github.com/Topbin2)
+- [김진석](https://github.com/genuine-seok)
+- [박우빈](https://github.com/Debonchocola)
+- [이의연](https://github.com/strongpond)
+- [조성호](https://github.com/CSH111)
+- [전대원](https://github.com/eodnjs467)
 
-### `npm test`
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 2. 프로젝트 소개 🚀
 
-### `npm run build`
+- 개요 : 원티드 프론트엔드 프리온보딩 7기 2팀 첫번째 과제 중 Best Practice
+- 주제 : 로그인, 회원가입을 포함한 투두리스트 CRUD
+- 기간 : 2022.10.25 ~ 2022.10.28
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br />
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 3. 구현 기능 📍
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 로그인, 회원가입
+  - 이메일, 비밀번호 유효성 검사
+  - 로그인 완료시 JWT 토큰 로컬 스토리지 저장
+  - 로그인 여부에 따른 리다이렉팅 구현
+- 투두 리스트
+  - 투두 리스트 아이템 상태에 따른 목록 표기
+  - 투두 리스트 CRUD 기능
 
-### `npm run eject`
+<br />
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 4. 프로젝트 구조 🗂
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+src
+├── apis
+├── assets
+├── components
+├── hooks
+├── pages
+├── types
+└── utils
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<br/>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 5. 프로젝트 설치 및 실행 ✨
 
-## Learn More
+<br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Git Clone
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```plaintext
+$ git clone git@github.com:pre-onboading-2team/To-do-App.git
+```
 
-### Code Splitting
+2. 프로젝트 패키지 설치
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```plaintext
+$ npm install
+```
 
-### Analyzing the Bundle Size
+3. 프로젝트 실행
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```plaintext
+$ npm start
+```
