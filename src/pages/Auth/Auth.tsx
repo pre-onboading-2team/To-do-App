@@ -9,7 +9,7 @@ import {
   getTokenFromLocalStorage,
   passwordValidation,
 } from "../../utils";
-import * as S from "./style";
+import * as S from "./Auth.style";
 
 const Login = () => {
   const navigate = useNavigate();
