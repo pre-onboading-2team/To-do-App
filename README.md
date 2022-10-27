@@ -8,7 +8,8 @@
 
 <br/>
 
-[🌍 배포 링크](https://wanted-pre-onboarding-frontend-psi.vercel.app/)
+- [🌍 배포 링크](https://wanted-pre-onboarding-frontend-psi.vercel.app/)
+- [📄 팀 노션](https://plain-airboat-3f4.notion.site/10-27-Todo-f9fb2a1265e54c33b0b73c306c230042)
 
 <br />
 
@@ -29,6 +30,15 @@
 - 개요 : 원티드 프론트엔드 프리온보딩 7기 2팀 첫번째 과제 중 Best Practice
 - 주제 : 로그인, 회원가입을 포함한 투두리스트 CRUD
 - 기간 : 2022.10.25 ~ 2022.10.28
+
+<br />
+
+
+## 3. 기술 스택 🛠
+
+- React
+- Typescript
+- Styled-Components
 
 <br />
 
@@ -80,3 +90,6 @@ $ npm install
 ```plaintext
 $ npm start
 ```
+
+<br/>
+
