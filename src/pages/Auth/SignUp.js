@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import UserFormInputs from '../components/UserInput';
-import UserFormBtn from '../components/UserFormBtn';
-import { LOGIN_INFO as form } from '../data/formData';
-import { signInAPI } from '../api/auth';
+import { UserFormInputs, UserFormBtn } from '../../components';
+import { SIGNUP_INFO as form } from '../../data/formData';
+import { signUpAPI } from '../../api';
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({
     email: '',
@@ -47,24 +46,14 @@ const SignIn = () => {
   };
 
   const handleClickButton = async () => {
-    const result = await signInAPI(inputValues.email, inputValues.password);
+    const result = await signUpAPI(inputValues.email, inputValues.password);
     if (axios.isAxiosError(result)) {
       alert(result.response.data.message);
     } else {
-      if (result.data.access_token) {
-        localStorage.setItem('jwt', result.data.access_token);
-        navigate('/todo');
-      } else {
-        alert('엑세스 토큰이 없습니다.');
-      }
+      alert('회원가입이 정상적으로 완료되었습니다. 로그인해주세요');
+      navigate('/');
     }
   };
-
-  useEffect(() => {
-    if (localStorage.getItem('jwt')) {
-      navigate('/todo');
-    }
-  }, [navigate]);
 
   return (
     <MainTop>
@@ -84,13 +73,13 @@ const SignIn = () => {
           handleClickButton={handleClickButton}
           isDisabled={isDisabled}
         />
-        <AskAccount to={'/signup'}>{form.bottomText}</AskAccount>
+        <AskAccount to={'/'}>{form.bottomText}</AskAccount>
       </FormBox>
     </MainTop>
   );
 };
 
-export default SignIn;
+export default SignUp;
 
 const MainTop = styled.div`
   height: 100vh;

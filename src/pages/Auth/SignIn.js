@@ -1,14 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import UserFormInputs from '../components/UserInput';
-import UserFormBtn from '../components/UserFormBtn';
-import { SIGNUP_INFO as form } from '../data/formData';
-import { signUpAPI } from '../api/auth';
+import { UserFormInputs, UserFormBtn } from '../../components';
+import { LOGIN_INFO as form } from '../../data/formData';
+import { signInAPI } from '../../api';
 
-const SignUp = () => {
+const SignIn = () => {
   const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({
     email: '',
@@ -25,10 +24,8 @@ const SignUp = () => {
   }, [isInputValid]);
 
   const allValueCheck = () => {
-    // const reg_email = ;
     const reg_pwd = /.{8,}/;
 
-    // const isEmailValid = reg_email.test(inputValues.email);
     const isEmailValid = inputValues.email.includes('@');
     const isPasswordValid = reg_pwd.test(inputValues.password);
 
@@ -49,14 +46,24 @@ const SignUp = () => {
   };
 
   const handleClickButton = async () => {
-    const result = await signUpAPI(inputValues.email, inputValues.password);
+    const result = await signInAPI(inputValues.email, inputValues.password);
     if (axios.isAxiosError(result)) {
       alert(result.response.data.message);
     } else {
-      alert('회원가입이 정상적으로 완료되었습니다. 로그인해주세요');
-      navigate('/');
+      if (result.data.access_token) {
+        localStorage.setItem('jwt', result.data.access_token);
+        navigate('/todo');
+      } else {
+        alert('엑세스 토큰이 없습니다.');
+      }
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      navigate('/todo');
+    }
+  }, [navigate]);
 
   return (
     <MainTop>
@@ -76,13 +83,13 @@ const SignUp = () => {
           handleClickButton={handleClickButton}
           isDisabled={isDisabled}
         />
-        <AskAccount to={'/'}>{form.bottomText}</AskAccount>
+        <AskAccount to={'/signup'}>{form.bottomText}</AskAccount>
       </FormBox>
     </MainTop>
   );
 };
 
-export default SignUp;
+export default SignIn;
 
 const MainTop = styled.div`
   height: 100vh;

@@ -1,9 +1,0 @@
-{
-  "extends": ["react-app", "plugin:prettier/recommended"],
-  "rules": {
-    "linebreak-style": 0,
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    "react/react-in-jsx-scope": "off",
-    "no-console": ["error", { "allow": ["warn", "error", "info"] }] // console.log() 금지
-  }
-}
