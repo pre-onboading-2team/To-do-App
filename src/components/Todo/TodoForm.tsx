@@ -1,10 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
 
 import { TodoService } from "../../apis";
 import { TodoProps } from "../../apis/TodoService";
 import { ACCESS_TOKEN } from "../../contexts/LoginContext";
 import { useLocalStorage } from "../../hooks";
+import { handleNetworkError } from "../../utils";
 import { Button, Input, Message } from "../common";
 
 type CreateTodoSuccessState = {
@@ -48,19 +48,7 @@ const TodoForm = ({ getTodos }: { getTodos: () => void }) => {
         message: res.data.message,
       } as CreateTodoSuccessState;
     } catch (e: unknown) {
-      if (axios.isAxiosError(e)) {
-        return {
-          statusCode: e.response?.status,
-          statusText: e.response?.statusText,
-          message: e.response?.data.message,
-        } as CreateTodoErrorState;
-      }
-      console.error(e);
-      return {
-        statusCode: 500,
-        statusText: "알 수 없는 서버 오류",
-        message: "서버 오류가 발생했습니다",
-      };
+      return handleNetworkError(e);
     }
   };
 

@@ -8,6 +8,7 @@ import { TodoService } from "../../apis";
 import { TodoProps } from "../../apis/TodoService";
 import { ACCESS_TOKEN } from "../../contexts/LoginContext";
 import { useLocalStorage } from "../../hooks";
+import { handleNetworkError } from "../../utils";
 import { Message } from "../common";
 
 export type TodoItemProps = {
@@ -99,19 +100,7 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
         message: res.data.message,
       } as RemoveTodoSuccessState;
     } catch (e: unknown) {
-      if (axios.isAxiosError(e)) {
-        return {
-          statusCode: e.response?.status,
-          statusText: e.response?.statusText,
-          message: e.response?.data.message,
-        } as RemoveTodoErrorState;
-      }
-      console.error(e);
-      return {
-        statusCode: 500,
-        statusText: "알 수 없는 서버 오류",
-        message: "서버 오류가 발생했습니다",
-      };
+      return handleNetworkError(e);
     }
   };
 
@@ -126,19 +115,7 @@ const TodoItem = ({ data, getTodos }: TodoItemProps) => {
         message: res.data.message,
       } as UpdateTodoSuccessState;
     } catch (e: unknown) {
-      if (axios.isAxiosError(e)) {
-        return {
-          statusCode: e.response?.status,
-          statusText: e.response?.statusText,
-          message: e.response?.data.message,
-        } as UpdateTodoErrorState;
-      }
-      console.error(e);
-      return {
-        statusCode: 500,
-        statusText: "알 수 없는 서버 오류",
-        message: "서버 오류가 발생했습니다",
-      };
+      return handleNetworkError(e);
     }
   };
 

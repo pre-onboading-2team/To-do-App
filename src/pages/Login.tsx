@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +17,7 @@ import {
   useLoginState,
 } from "../contexts/LoginContext";
 import { useInputs, useLocalStorage } from "../hooks";
+import { handleNetworkError } from "../utils";
 import { isValidEmail, isValidPassword } from "../utils/validation";
 
 type LoginSuccessState = {
@@ -63,7 +63,6 @@ export const Login = () => {
 
   async function tryLogin(): Promise<LoginResultState | unknown> {
     try {
-      // const res = await AUTH_API.signIn(inputState);
       const res = await AuthService.signIn(inputState);
       return {
         statusCode: res.status,
@@ -72,19 +71,7 @@ export const Login = () => {
         accessToken: res.data.access_token,
       } as LoginSuccessState;
     } catch (e: unknown) {
-      if (axios.isAxiosError(e)) {
-        return {
-          statusCode: e.response?.status,
-          statusText: e.response?.statusText,
-          message: e.response?.data.message,
-        } as LoginErrorState;
-      }
-      console.error(e);
-      return {
-        statusCode: 500,
-        statusText: "알 수 없는 서버 오류",
-        message: "서버 오류가 발생했습니다",
-      };
+      return handleNetworkError(e);
     }
   }
 
@@ -122,7 +109,7 @@ export const Login = () => {
     }
 
     if (isLoggedIn) goTodo();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, accessToken]);
 
   return (
     <Layout>

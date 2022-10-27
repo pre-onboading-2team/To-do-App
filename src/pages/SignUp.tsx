@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +12,7 @@ import {
 } from "../components/common";
 import { Input, InputField } from "../components/common/Input";
 import { useInputs } from "../hooks";
+import { handleNetworkError } from "../utils";
 import { isValidEmail, isValidPassword } from "../utils/validation";
 
 type SignUpSuccessState = {
@@ -64,19 +64,7 @@ export const SignUp = () => {
         message: res.data.message,
       } as SignUpSuccessState;
     } catch (e: unknown) {
-      if (axios.isAxiosError(e)) {
-        return {
-          statusCode: e.response?.status,
-          statusText: e.response?.statusText,
-          message: e.response?.data.message,
-        } as SignUpErrorState;
-      }
-      console.error(e);
-      return {
-        statusCode: 500,
-        statusText: "알 수 없는 서버 오류",
-        message: "서버 오류가 발생했습니다",
-      };
+      return handleNetworkError(e);
     }
   }
 

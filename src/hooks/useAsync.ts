@@ -57,7 +57,6 @@ export function useAsync(
       const data = await callback();
       dispatch({ type: "SUCCESS", data });
     } catch (e: any) {
-      // TODO: 에러 타입 정의하기
       dispatch({ type: "ERROR", error: e });
     }
   };
